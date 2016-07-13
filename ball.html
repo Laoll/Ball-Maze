@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<title>无标题</title>
+	<style>
+	  html, body{margin: 0;padding: 0;}
+	  body{position: relative;}
+	  .ball{position: absolute;width: 50px;height: 50px;background: #999;border-radius: 50%;}
+	  .ball2{position: absolute;width: 70px;height: 70px;background: #000;border-radius: 50%;}
+	</style>
+</head>
+
+  <body>
+  
+  <div id="ball" class="ball"></div>
+  <div id="ball2" class="ball2"></div>
+
+  <script type="text/javascript"> 
+
+  // 设置屏幕的长宽
+  var width = document.documentElement.clientWidth;
+  var height = document.documentElement.clientHeight;
+
+  var ball = document.getElementById("ball");
+  var ball2 = document.getElementById("ball2");
+  // 设置球的相关数据
+  var directX = 1; // x轴方向
+  var directY = 1; // y轴方向
+  var speed = 45; // 设置速度
+  var radius = ball.offsetWidth / 2; // 设置半径
+  var ballX = 0;
+  var ballY = 0;
+  ball.style.left = Math.floor(Math.random() * width) - radius + "px";
+  ball.style.top = Math.floor(Math.random() * height) - radius + "px";
+
+  var directX2 = 1; // x轴方向
+  var directY2 = 1; // y轴方向
+  var speed2 = 50; // 设置速度
+  var radius2 = ball2.offsetWidth / 2; // 设置半径
+  var ballX2 = 0;
+  var ballY2 = 0;
+  ball2.style.left = Math.floor(Math.random() * width) - radius2 + "px";
+  ball2.style.top = Math.floor(Math.random() * height) - radius2 + "px";
+
+  function ballMove(){
+  	// 设置球的随机出现位置
+  	ballX = parseInt(ball.style.left) + directX * speed;
+  	ballY = parseInt(ball.style.top) + directY * speed;
+
+  	ballX2 = parseInt(ball2.style.left) + directX2 * speed2;
+  	ballY2 = parseInt(ball2.style.top) + directY2 * speed2;
+
+  	var dx = Math.abs(ballX2 - ballX);
+  	var dy = Math.abs(ballY2 - ballY);
+  	var dis = Math.sqrt(dx * dx + dy * dy);
+
+  	ball.style.left = ballX + "px";
+  	ball.style.top = ballY + "px";
+
+  	ball2.style.left = ballX2 + "px";
+  	ball2.style.top = ballY2 + "px";
+
+  	// 判断x轴反弹
+  	if(width - ballX <= radius || ballX < 0){
+  		directX = -directX;
+  	}
+  	if(width - ballX2 <= radius2 || ballX2 < 0){
+  		directX2 = -directX2;
+  	}
+
+  	//判断y轴反弹
+  	if(height - ballY <= radius || ballY < 0){
+  		directY = -directY;
+  	}
+  	if(height - ballY2 <= radius2 || ballY2 < 0){
+  		directY2 = -directY2;
+  	}
+
+  	if(dis < 100){
+  		directX = -directX;
+  		directX2 = -directX2;
+  	}
+
+  	setTimeout(ballMove, 50);
+  }
+
+  window.onload = function(){
+  	setTimeout(ballMove, 50);
+  }
+
+  </script>
+
+
+</body>
+</html>
